@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Réserver une Table | Times Café Bar & Grill – Akpakpa, Cotonou</title>
+    <meta name="description"
+        content="Réservez votre table en terrasse ou en salle chez Times Café Bar & Grill à Cotonou. Soirées karaoké, repas entre amis ou anniversaires. Confirmation rapide.">
+    <meta name="theme-color" content="#0b1626">
+    <link rel="canonical" href="https://times-site-cotonou.netlify.app/reservation.html">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='16' width='100' height='100' fill='%230b1626'/><text x='50' y='68' text-anchor='middle' font-size='48' font-weight='bold' fill='%235cc8ff'>T</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Anti-Netlify Drawer -->
+    <style>
+        netlify-drawer, #netlify-drawer, [data-netlify-drawer], [class*="netlify-drawer"], [id*="netlify-drawer"], [data-netlify-badge], iframe[src*="netlify"] { display: none !important; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Global -->
+    <header class="navbar" role="banner">
+        <a class="logo" href="index.html" aria-label="Times Accueil">TIMES</a>
+        <nav class="nav-links" id="nav-links" role="navigation" aria-label="Navigation principale">
+            <a href="index.html">Accueil</a>
+            <a href="menu.html">Menu</a>
+            <a href="commander.html">Livraison</a>
+            <a href="plat-du-jour.html">Plat du jour</a>
+            <a href="reservation.html" class="active">Réserver</a>
+            <a href="evenements.html">Événements</a>
+            <a href="galerie.html">Galerie</a>
+            <a href="avis.html">Avis</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="header-phone" href="tel:+2290169698686"><span>📞</span><span>01 69 69 86 86</span></a>
+            <a class="cart-header-btn" href="commander.html" aria-label="Voir le panier">
+                <span>🛒</span><span class="cart-badge" style="display:none;">0</span>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- PageHeader -->
+    <div class="page-header">
+        <span class="section-tag">Réservation de Table</span>
+        <h1>Votre Place Vous Attend</h1>
+        <p>Pour un dîner romantique, une soirée festive entre amis autour d'un karaoké ou un déjeuner d'affaires : réservez gratuitement votre table en quelques clics.</p>
+    </div>
+
+    <main class="wrap" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3.5rem; align-items: start;">
+            
+            <!-- Formulaire de réservation -->
+            <div class="feedback-box" style="margin: 0; max-width: 100%;">
+                <h3 style="color: #fff; font-size: 1.4rem; margin-bottom: 1.2rem;">Détails de votre venue</h3>
+
+                <!-- Sélecteur de nombre de personnes (1 à 20) comme préconisé dans la spec -->
+                <label style="display:block; font-size:.88rem; color:var(--mute); margin-bottom:.5rem;">Nombre de personnes :</label>
+                <div class="guests-selector" id="guests-selector">
+                    <button type="button" class="guest-pill" data-value="1">1</button>
+                    <button type="button" class="guest-pill active" data-value="2">2</button>
+                    <button type="button" class="guest-pill" data-value="3">3</button>
+                    <button type="button" class="guest-pill" data-value="4">4</button>
+                    <button type="button" class="guest-pill" data-value="5">5</button>
+                    <button type="button" class="guest-pill" data-value="6">6</button>
+                    <button type="button" class="guest-pill" data-value="8">8</button>
+                    <button type="button" class="guest-pill" data-value="10">10</button>
+                    <button type="button" class="guest-pill" data-value="12">12</button>
+                    <button type="button" class="guest-pill" data-value="15">15</button>
+                    <button type="button" class="guest-pill" data-value="20">20+</button>
+                </div>
+
+                <div class="fields" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Votre Nom complet *</label>
+                        <input id="r-name" placeholder="Ex: Boris Mensah" required style="width:100%; padding:.85rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff;">
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Numéro Téléphone / WhatsApp *</label>
+                        <input id="r-phone" placeholder="Ex: +229 01 69 69 86 86" required style="width:100%; padding:.85rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff;">
+                    </div>
+                </div>
+
+                <div class="fields" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Date souhaitée *</label>
+                        <input id="r-date" type="date" required style="width:100%; padding:.85rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff;">
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Heure d'arrivée *</label>
+                        <input id="r-time" type="time" required value="20:00" style="width:100%; padding:.85rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Occasion particulière (optionnel)</label>
+                    <select id="r-occasion" style="width:100%; padding:.85rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-family:inherit;">
+                        <option value="">Sélectionnez une occasion...</option>
+                        <option value="Soirée festive entre amis">🎉 Soirée festive entre amis / Karaoké</option>
+                        <option value="Anniversaire">🎂 Anniversaire & Célébration</option>
+                        <option value="Dîner romantique">🌹 Dîner en tête-à-tête</option>
+                        <option value="Déjeuner d'affaires">💼 Déjeuner / Dîner d'affaires</option>
+                        <option value="Repas de famille">👨‍👩‍👧‍👦 Déjeuner / Dîner en famille</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Demandes particulières (emplacement terrasse, gâteau...)</label>
+                    <textarea id="r-notes" placeholder="Ex: Une table sur la terrasse près des guirlandes si possible..." rows="3" style="width:100%; padding:.85rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-family:inherit; resize:vertical;"></textarea>
+                </div>
+
+                <button type="button" id="btn-submit-res" class="btn" style="width: 100%; padding: 1.1rem; font-size: 1.05rem;">
+                    Confirmer ma réservation sur WhatsApp →
+                </button>
+            </div>
+
+            <!-- Bloc Informations Pratiques -->
+            <div>
+                <div class="contact-info-card" style="margin-bottom: 2rem;">
+                    <h3 style="color:#fff; font-size: 1.3rem; margin-bottom: 1.2rem;">Pourquoi réserver chez Times ?</h3>
+                    
+                    <div style="display:flex; flex-direction:column; gap:1.2rem;">
+                        <div style="display:flex; gap:1rem; align-items:flex-start;">
+                            <span style="font-size:1.5rem;">🌿</span>
+                            <div>
+                                <b style="color:var(--amber); display:block; font-size:.95rem;">Terrasse extérieure en bois</b>
+                                <span style="color:var(--mute); font-size:.88rem;">Atmosphère aérée, guirlandes dorées et brise agréable tous les soirs.</span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:1rem; align-items:flex-start;">
+                            <span style="font-size:1.5rem;">🎤</span>
+                            <div>
+                                <b style="color:var(--amber); display:block; font-size:.95rem;">Soirées Karaoké les Jeudis & Samedis</b>
+                                <span style="color:var(--mute); font-size:.88rem;">L'ambiance monte dès 20h ! Réservez tôt pour garantir les meilleures places près de la scène.</span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:1rem; align-items:flex-start;">
+                            <span style="font-size:1.5rem;">🚗</span>
+                            <div>
+                                <b style="color:var(--amber); display:block; font-size:.95rem;">Accès facile & Parking</b>
+                                <span style="color:var(--mute); font-size:.88rem;">Situé à Akpakpa PK6, directement en face du Stade René Pleven avec stationnement sécurisé.</span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:1rem; align-items:flex-start;">
+                            <span style="font-size:1.5rem;">⚡</span>
+                            <div>
+                                <b style="color:var(--amber); display:block; font-size:.95rem;">Confirmation rapide</b>
+                                <span style="color:var(--mute); font-size:.88rem;">Notre équipe vous répond sur WhatsApp en moins de 15 minutes.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background:var(--bg2); border:1px solid rgba(170,181,198,.15); border-radius:18px; padding:1.8rem; text-align:center;">
+                    <span style="font-size:1.8rem; display:block; margin-bottom:.5rem;">📞</span>
+                    <h4 style="color:#fff; margin-bottom:.4rem;">Vous préférez réserver par téléphone ?</h4>
+                    <p class="muted" style="font-size:.9rem; margin-bottom:1rem;">Appelez directement notre accueil au standard.</p>
+                    <a class="btn btn-secondary" href="tel:+2290169698686">Appeler le 01 69 69 86 86</a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer Complet -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>TIMES</h4>
+                    <p class="footer-desc">Café, Bar & Grillades à Akpakpa, Cotonou. Une ambiance chaleureuse, des plats généreux et des moments inoubliables sous les guirlandes.</p>
+                    <div class="footer-socials">
+                        <a href="https://wa.me/2290169698686" class="footer-social-btn" aria-label="WhatsApp" target="_blank" rel="noopener">💬</a>
+                        <a href="tel:+2290169698686" class="footer-social-btn" aria-label="Téléphone">📞</a>
+                        <a href="https://maps.app.goo.gl/ukoEQ7XUMRnVW49Y6" class="footer-social-btn" aria-label="Google Maps" target="_blank" rel="noopener">📍</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact & Horaires</h4>
+                    <ul class="footer-hours-list">
+                        <li><span>Tous les jours :</span> 9h30 – 02h00</li>
+                        <li><span>Vendredi – Samedi :</span> 9h30 – 03h00</li>
+                    </ul>
+                    <p style="color: var(--mute); font-size: .9rem; margin-bottom: .4rem;">
+                        📍 <strong>Repère :</strong> Lot n° 36, Akpakpa PK6<br>
+                        Face Stade René Pleven, Carrefour Le Bélier<br>
+                        Cotonou, Bénin
+                    </p>
+                    <p style="color: var(--mute); font-size: .9rem;">
+                        📞 Téléphone : <a href="tel:+2290169698686" style="color: var(--amber); font-weight: 600;">+229 01 69 69 86 86</a>
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">→ Accueil</a></li>
+                        <li><a href="menu.html">→ La Carte complète</a></li>
+                        <li><a href="commander.html">→ Livraison & À emporter</a></li>
+                        <li><a href="plat-du-jour.html">→ Formule Plat du Jour</a></li>
+                        <li><a href="reservation.html">→ Réserver une table</a></li>
+                        <li><a href="evenements.html">→ Soirées & Karaoké</a></li>
+                        <li><a href="contact.html">→ Contact & Plan d'accès</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2017–2026 Times Café Bar & Grill · Réservations en ligne · Cotonou, Bénin.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Flottant -->
+    <a class="wa-fab" href="https://wa.me/2290169698686?text=Bonjour%20Times,%20je%20souhaite%20r%C3%A9server%20une%20table." target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.301-.15-1.782-.879-2.058-.98-.276-.1-.477-.15-.677.15-.2.301-.777.98-.953 1.18-.176.2-.352.226-.653.076-.301-.15-1.272-.469-2.424-1.496-.895-.799-1.5-1.787-1.676-2.088-.176-.301-.019-.464.132-.614.136-.135.301-.352.451-.527.15-.176.2-.301.301-.502.1-.2.05-.376-.025-.526-.075-.15-.677-1.632-.928-2.235-.245-.588-.493-.508-.677-.518-.175-.009-.376-.011-.577-.011-.201 0-.527.075-.803.376-.276.301-1.054 1.03-1.054 2.512 0 1.482 1.079 2.912 1.23 3.113.15.201 2.124 3.243 5.145 4.549.719.311 1.28.497 1.718.636.722.23 1.379.197 1.9.12.58-.088 1.782-.728 2.033-1.431.25-.703.25-1.305.175-1.431-.075-.126-.276-.201-.577-.351zM12.04 2C6.51 2 2.03 6.48 2.03 12c0 1.93.55 3.73 1.5 5.26L2 22l4.89-1.49C8.36 21.37 10.14 22 12.04 22c5.52 0 10-4.48 10-10S17.56 2 12.04 2z"/></svg>
+        <span>WhatsApp</span>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

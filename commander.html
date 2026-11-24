@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Livraison & Commande en Ligne | Times Café Bar & Grill – Cotonou</title>
+    <meta name="description"
+        content="Commandez en ligne vos grillades, poissons braisés et pizzas chez Times Café Bar & Grill à Cotonou. Livraison rapide à domicile ou à emporter.">
+    <meta name="theme-color" content="#0b1626">
+    <link rel="canonical" href="https://times-site-cotonou.netlify.app/commander.html">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='16' width='100' height='100' fill='%230b1626'/><text x='50' y='68' text-anchor='middle' font-size='48' font-weight='bold' fill='%235cc8ff'>T</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Anti-Netlify Drawer -->
+    <style>
+        netlify-drawer, #netlify-drawer, [data-netlify-drawer], [class*="netlify-drawer"], [id*="netlify-drawer"], [data-netlify-badge], iframe[src*="netlify"] { display: none !important; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Global -->
+    <header class="navbar" role="banner">
+        <a class="logo" href="index.html" aria-label="Times Accueil">TIMES</a>
+        <nav class="nav-links" id="nav-links" role="navigation" aria-label="Navigation principale">
+            <a href="index.html">Accueil</a>
+            <a href="menu.html">Menu</a>
+            <a href="commander.html" class="active">Livraison</a>
+            <a href="plat-du-jour.html">Plat du jour</a>
+            <a href="reservation.html">Réserver</a>
+            <a href="evenements.html">Événements</a>
+            <a href="galerie.html">Galerie</a>
+            <a href="avis.html">Avis</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="header-phone" href="tel:+2290169698686"><span>📞</span><span>01 69 69 86 86</span></a>
+            <a class="cart-header-btn" href="#panier-section" aria-label="Voir le panier">
+                <span>🛒</span><span class="cart-badge" style="display:none;">0</span>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- PageHeader -->
+    <div class="page-header">
+        <span class="section-tag">Commande & Livraison</span>
+        <h1>Livraison Express & Plats à Emporter</h1>
+        <p>Sélectionnez vos plats, composez votre panier et envoyez votre commande en un instant. Livraison rapide sur Cotonou et récupération directe au restaurant.</p>
+    </div>
+
+    <main class="wrap" style="padding-top: 3rem; padding-bottom: 5rem;">
+
+        <div class="order-layout">
+            <!-- Colonne Gauche : Catalogue Commandable -->
+            <div class="order-catalog">
+                <!-- Filtre de recherche rapide -->
+                <div style="margin-bottom: 2rem;">
+                    <input type="text" id="order-search" class="search-input" placeholder="Filtrer parmi les plats commandables..." aria-label="Recherche">
+                </div>
+
+                <div id="order-products-container">
+                    <!-- Rempli par JavaScript selon TIMES_DATA.products (is_orderable === true) -->
+                </div>
+            </div>
+
+            <!-- Colonne Droite : Panier & Formulaire Client -->
+            <div class="cart-panel" id="panier-section">
+                <h3>
+                    <span>🛒 Votre Panier</span>
+                    <button type="button" onclick="timesApp.clearCart()" style="background:none; border:none; color:var(--mute); font-size:.82rem; cursor:pointer; text-decoration:underline;">Vider</button>
+                </h3>
+
+                <div id="cart-empty-msg" class="empty-state" style="padding: 2rem 1rem; border: none; background: transparent;">
+                    <div style="font-size: 2.2rem; margin-bottom: .5rem;">🛍️</div>
+                    <p style="color: var(--mute); font-size: .92rem; margin: 0;">Votre panier est vide pour le moment.<br>Ajoutez des plats depuis la carte à gauche.</p>
+                </div>
+
+                <div id="cart-items-list" class="cart-items-list"></div>
+
+                <div class="cart-total-row">
+                    <span>Total à régler :</span>
+                    <span id="cart-total-amount" class="cart-total-amount">0 F CFA</span>
+                </div>
+
+                <!-- Formulaire Coordonnées & Livraison -->
+                <div style="margin-top: 1.5rem; border-top: 1px solid rgba(170,181,198,.15); padding-top: 1.2rem;">
+                    <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 1rem;">Coordonnées de livraison</h4>
+
+                    <div style="display:flex; flex-direction:column; gap:.8rem;">
+                        <div>
+                            <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Votre Nom complet *</label>
+                            <input type="text" id="order-name" placeholder="Ex: Jean Agossa" required style="width:100%; padding:.75rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-size:.9rem;">
+                        </div>
+
+                        <div>
+                            <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Numéro Téléphone / WhatsApp *</label>
+                            <input type="tel" id="order-phone" placeholder="Ex: +229 01 69 69 86 86" required style="width:100%; padding:.75rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-size:.9rem;">
+                        </div>
+
+                        <div>
+                            <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Quartier & Adresse de livraison *</label>
+                            <input type="text" id="order-address" placeholder="Ex: Akpakpa, Maro-Militaire" required style="width:100%; padding:.75rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-size:.9rem;">
+                        </div>
+
+                        <div>
+                            <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Repère précis (maison, carrefour...)</label>
+                            <input type="text" id="order-landmark" placeholder="Ex: En face de la pharmacie, portail noir" style="width:100%; padding:.75rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-size:.9rem;">
+                        </div>
+
+                        <!-- Mode de paiement -->
+                        <div style="margin-top: .5rem;">
+                            <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.4rem;">Mode de règlement souhaité :</label>
+                            <div style="display:flex; flex-direction:column; gap:.4rem; font-size:.88rem; color:#fff;">
+                                <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer;">
+                                    <input type="radio" name="payment_mode" value="Paiement en espèces à la livraison" checked>
+                                    💵 Paiement en espèces à la réception
+                                </label>
+                                <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer;">
+                                    <input type="radio" name="payment_mode" value="Mobile Money (MTN MoMo / Moov Money)">
+                                    📱 Mobile Money (MTN MoMo / Moov Money)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="display:block; font-size:.82rem; color:var(--mute); margin-bottom:.3rem;">Remarques (cuisson, sans piment...)</label>
+                            <input type="text" id="order-notes" placeholder="Ex: Piment doux à part svp" style="width:100%; padding:.75rem; border-radius:8px; border:1px solid rgba(170,181,198,.25); background:var(--bg2); color:#fff; font-size:.9rem;">
+                        </div>
+
+                        <button type="button" id="btn-confirm-order" class="btn" style="width:100%; margin-top:1rem; padding:1rem; font-size:1.05rem;" disabled>
+                            Valider ma commande sur WhatsApp →
+                        </button>
+                        <p style="font-size: .75rem; color: var(--mute); text-align: center; margin-top: .4rem;">
+                            Un récapitulatif prêt à envoyer s'ouvrira dans WhatsApp pour confirmation immédiate avec notre équipe.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Complet -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>TIMES</h4>
+                    <p class="footer-desc">Café, Bar & Grillades à Akpakpa, Cotonou. Une ambiance chaleureuse, des plats généreux et des moments inoubliables sous les guirlandes.</p>
+                    <div class="footer-socials">
+                        <a href="https://wa.me/2290169698686" class="footer-social-btn" aria-label="WhatsApp" target="_blank" rel="noopener">💬</a>
+                        <a href="tel:+2290169698686" class="footer-social-btn" aria-label="Téléphone">📞</a>
+                        <a href="https://maps.app.goo.gl/ukoEQ7XUMRnVW49Y6" class="footer-social-btn" aria-label="Google Maps" target="_blank" rel="noopener">📍</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact & Horaires</h4>
+                    <ul class="footer-hours-list">
+                        <li><span>Tous les jours :</span> 9h30 – 02h00</li>
+                        <li><span>Vendredi – Samedi :</span> 9h30 – 03h00</li>
+                    </ul>
+                    <p style="color: var(--mute); font-size: .9rem; margin-bottom: .4rem;">
+                        📍 <strong>Repère :</strong> Lot n° 36, Akpakpa PK6<br>
+                        Face Stade René Pleven, Carrefour Le Bélier<br>
+                        Cotonou, Bénin
+                    </p>
+                    <p style="color: var(--mute); font-size: .9rem;">
+                        📞 Téléphone : <a href="tel:+2290169698686" style="color: var(--amber); font-weight: 600;">+229 01 69 69 86 86</a>
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">→ Accueil</a></li>
+                        <li><a href="menu.html">→ La Carte complète</a></li>
+                        <li><a href="commander.html">→ Livraison & À emporter</a></li>
+                        <li><a href="plat-du-jour.html">→ Formule Plat du Jour</a></li>
+                        <li><a href="reservation.html">→ Réserver une table</a></li>
+                        <li><a href="evenements.html">→ Soirées & Karaoké</a></li>
+                        <li><a href="contact.html">→ Contact & Plan d'accès</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2017–2026 Times Café Bar & Grill · Tous droits réservés · Akpakpa, Cotonou, Bénin.</p>
+                <p>Cuisine locale · Grillades · Livraison Cotonou</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Flottant -->
+    <a class="wa-fab" href="https://wa.me/2290169698686?text=Bonjour%20Times,%20je%20souhaite%20commander." target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.301-.15-1.782-.879-2.058-.98-.276-.1-.477-.15-.677.15-.2.301-.777.98-.953 1.18-.176.2-.352.226-.653.076-.301-.15-1.272-.469-2.424-1.496-.895-.799-1.5-1.787-1.676-2.088-.176-.301-.019-.464.132-.614.136-.135.301-.352.451-.527.15-.176.2-.301.301-.502.1-.2.05-.376-.025-.526-.075-.15-.677-1.632-.928-2.235-.245-.588-.493-.508-.677-.518-.175-.009-.376-.011-.577-.011-.201 0-.527.075-.803.376-.276.301-1.054 1.03-1.054 2.512 0 1.482 1.079 2.912 1.23 3.113.15.201 2.124 3.243 5.145 4.549.719.311 1.28.497 1.718.636.722.23 1.379.197 1.9.12.58-.088 1.782-.728 2.033-1.431.25-.703.25-1.305.175-1.431-.075-.126-.276-.201-.577-.351zM12.04 2C6.51 2 2.03 6.48 2.03 12c0 1.93.55 3.73 1.5 5.26L2 22l4.89-1.49C8.36 21.37 10.14 22 12.04 22c5.52 0 10-4.48 10-10S17.56 2 12.04 2z"/></svg>
+        <span>WhatsApp</span>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var container = document.getElementById('order-products-container');
+            var categories = (window.TIMES_DATA && window.TIMES_DATA.categories) || [];
+            var products = (window.TIMES_DATA && window.TIMES_DATA.products) || [];
+
+            var orderableProducts = products.filter(function (p) { return p.is_orderable; });
+
+            // Afficher par catégorie avec compteur d'articles comme spécifié dans la spec
+            categories.forEach(function (cat) {
+                if (cat.id === 'all') return;
+                var catProducts = orderableProducts.filter(function (p) { return p.category === cat.id; });
+                if (catProducts.length === 0) return; // Règle 5 : jamais de catégorie vide !
+
+                var catSection = document.createElement('div');
+                catSection.className = 'cat-order-block';
+                catSection.style.marginBottom = '3rem';
+
+                var catHeader = document.createElement('div');
+                catHeader.style.cssText = 'display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem; border-bottom:1px solid rgba(170,181,198,.15); padding-bottom:.5rem;';
+                catHeader.innerHTML = 
+                    '<h3 style="color:var(--amber); font-size:1.4rem; display:flex; align-items:center; gap:.5rem;">' + (cat.icon || '') + ' ' + cat.name + '</h3>' +
+                    '<span style="background:rgba(255,255,255,.08); color:var(--mute); padding:.2rem .6rem; border-radius:999px; font-size:.82rem; font-weight:600;">' + catProducts.length + ' article' + (catProducts.length > 1 ? 's' : '') + '</span>';
+                catSection.appendChild(catHeader);
+
+                var grid = document.createElement('div');
+                grid.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:1.5rem;';
+
+                catProducts.forEach(function (p) {
+                    var card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = 
+                        '<div class="product-card-img-wrap">' +
+                            '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy">' +
+                            (p.badge ? ('<span class="product-card-badge">' + p.badge + '</span>') : '') +
+                        '</div>' +
+                        '<div class="product-card-body">' +
+                            '<h4 class="product-card-title">' + p.name + '</h4>' +
+                            '<p class="product-card-desc">' + p.composition + '</p>' +
+                            '<div class="product-card-foot">' +
+                                '<span class="product-card-price">' + p.priceFormatted + '</span>' +
+                                '<button type="button" class="btn-add-cart" data-add-cart="' + p.id + '">+ Ajouter</button>' +
+                            '</div>' +
+                        '</div>';
+                    grid.appendChild(card);
+                });
+
+                catSection.appendChild(grid);
+                container.appendChild(catSection);
+            });
+
+            // Filtre de recherche dans la commande
+            var orderSearch = document.getElementById('order-search');
+            if (orderSearch) {
+                orderSearch.addEventListener('input', function () {
+                    var q = orderSearch.value.toLowerCase().trim();
+                    container.querySelectorAll('.product-card').forEach(function (c) {
+                        var match = (c.textContent || '').toLowerCase().indexOf(q) > -1;
+                        c.style.display = match ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

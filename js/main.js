@@ -1,18 +1,27 @@
 /* ==========================================================================
    Times Café Bar & Grill — JavaScript principal
+   Fonctionnalités complètes : Panier, Réservation, Événements, Menu, Feedback
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  // ── Config ──────────────────────────────────────────────────────────────
-  var WHATSAPP_NUMBER = '2290169698686';
+  var data = window.TIMES_DATA || {};
+  var settings = data.settings || {
+    phoneRaw: '2290169698686',
+    phone: '+229 01 69 69 86 86'
+  };
 
+  // ── Utilitaires ──────────────────────────────────────────────────────────
   function waLink(text) {
-    return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
+    return 'https://wa.me/' + settings.phoneRaw + '?text=' + encodeURIComponent(text);
   }
 
-  // ── WhatsApp links ──────────────────────────────────────────────────────
+  function formatCFA(amount) {
+    return (amount || 0).toLocaleString('fr-FR') + ' F CFA';
+  }
+
+  // ── Liens WhatsApp automatiques ──────────────────────────────────────────
   function wireWhatsApp() {
     document.querySelectorAll('[data-wa]').forEach(function (el) {
       el.href = waLink(el.dataset.wa);
@@ -21,176 +30,29 @@
     });
   }
 
-  // ── Menu "Commander" buttons ────────────────────────────────────────────
-  function addOrderButtons() {
-    document.querySelectorAll('figure[data-n]').forEach(function (fig) {
-      var link = document.createElement('a');
-      link.className = 'cmd';
-      link.textContent = 'Commander sur WhatsApp →';
-      link.href = '#';
-      link.dataset.wa = 'Bonjour Times, je voudrais commander : ' + fig.dataset.n;
-      link.setAttribute('aria-label', 'Commander ' + fig.dataset.n + ' sur WhatsApp');
-      fig.querySelector('figcaption').appendChild(link);
-    });
-  }
-
-  // ── Menu filter tabs ────────────────────────────────────────────────────
-  function initTabs() {
-    var categories = [
-      ['all', 'Tout'],
-      ['p',   'Poissons'],
-      ['d',   'Plats du pays'],
-      ['g',   'Grillades'],
-      ['z',   'Pizzas'],
-      ['r',   'Pâtes & riz'],
-      ['s',   'Desserts']
-    ];
-
-    var tabsContainer = document.getElementById('tabs');
-    if (!tabsContainer) return;
-
-    tabsContainer.setAttribute('role', 'tablist');
-    tabsContainer.setAttribute('aria-label', 'Filtrer par catégorie');
-
-    categories.forEach(function (cat, i) {
-      var btn = document.createElement('button');
-      btn.textContent = cat[1];
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-      btn.setAttribute('aria-label', 'Afficher ' + cat[1]);
-
-      btn.addEventListener('click', function () {
-        // Update pressed state
-        tabsContainer.querySelectorAll('button').forEach(function (b) {
-          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
-        });
-
-        // Filter figures
-        document.querySelectorAll('figure[data-c]').forEach(function (fig) {
-          fig.hidden = cat[0] !== 'all' && fig.dataset.c !== cat[0];
-        });
-
-        // Hide empty categories
-        document.querySelectorAll('.cat').forEach(function (c) {
-          c.hidden = !c.querySelector('figure:not([hidden])');
-        });
-      });
-
-      tabsContainer.appendChild(btn);
-    });
-  }
-
-  // ── Reservation form ────────────────────────────────────────────────────
-  function initReservation() {
-    var btn = document.getElementById('rb');
-    if (!btn) return;
-
-    var errorEl = document.getElementById('form-error');
-    var name    = document.getElementById('r-name');
-    var date    = document.getElementById('r-date');
-    var time    = document.getElementById('r-time');
-    var guests  = document.getElementById('r-guests');
-
-    // Set minimum date to today
-    if (date) {
-      var today = new Date().toISOString().split('T')[0];
-      date.min = today;
-      if (!date.value) date.value = today;
-    }
-
-    // Set default evening time if empty
-    if (time && !time.value) {
-      time.value = '19:30';
-    }
-
-    // Live error clearing
-    [name, date, time, guests].forEach(function (inp) {
-      if (!inp) return;
-      inp.addEventListener('input', function () {
-        if (inp.value.trim()) {
-          inp.classList.remove('error');
-          if (errorEl && !document.querySelector('.fields input.error')) {
-            errorEl.textContent = '';
-          }
-        }
-      });
-    });
-
-    btn.addEventListener('click', function (e) {
-      // Reset errors
-      [name, date, time, guests].forEach(function (inp) {
-        if (inp) inp.classList.remove('error');
-      });
-
-      // Validate
-      var errors = [];
-      if (!name.value.trim()) {
-        errors.push('votre nom');
-        name.classList.add('error');
-      }
-      if (!date.value) {
-        errors.push('la date');
-        date.classList.add('error');
-      }
-      if (!time.value) {
-        errors.push("l'heure");
-        time.classList.add('error');
-      }
-      if (!guests.value || parseInt(guests.value, 10) < 1) {
-        errors.push('le nombre de personnes');
-        guests.classList.add('error');
-      }
-
-      if (errors.length > 0) {
-        e.preventDefault();
-        if (errorEl) {
-          errorEl.textContent = 'Veuillez renseigner : ' + errors.join(', ') + '.';
-        }
-        var firstError = document.querySelector('.fields input.error');
-        if (firstError) firstError.focus();
-        return;
-      }
-
-      // Clear error message
-      if (errorEl) errorEl.textContent = '';
-
-      // Build WhatsApp link
-      var message = 'Bonjour Times, je voudrais réserver une table.\n\n'
-        + '• Nom : ' + name.value.trim() + '\n'
-        + '• Date : ' + date.value + '\n'
-        + '• Heure : ' + time.value + '\n'
-        + '• Personnes : ' + guests.value;
-
-      btn.href = waLink(message);
-      btn.target = '_blank';
-    });
-  }
-
-  // ── Open/Closed status (Heure de Cotonou : UTC+1) ───────────────────────
+  // ── Statut d'ouverture en direct (UTC+1 Cotonou) ──────────────────────────
   function updateStatus() {
     var dotEl = document.getElementById('dot');
     var openEl = document.getElementById('open');
     var statusEl = document.getElementById('status');
+    if (!dotEl && !openEl && !statusEl) return;
 
-    // Calcul de l'heure locale à Cotonou (UTC+1)
     var now = new Date();
     var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    var cotonou = new Date(utc + 3600000);
+    var cotonou = new Date(utc + 3600000); // Cotonou est à UTC+1
     var minutes = cotonou.getHours() * 60 + cotonou.getMinutes();
 
-    // Ouvert de 9h30 (570 min) à 2h00 du matin (120 min)
+    // Ouvert de 9h30 (570 min) à 2h00 du matin (120 min le lendemain)
     var isOpen = minutes >= 570 || minutes < 120;
 
     if (dotEl) {
       dotEl.className = 'dot' + (isOpen ? ' on' : '');
     }
-
     if (openEl) {
       openEl.textContent = isOpen
         ? "Ouvert maintenant · jusqu'à 2h"
         : 'Actuellement fermé · Réouverture à 9h30';
     }
-
     if (statusEl) {
       statusEl.innerHTML = isOpen
         ? '<span class="status-dot open" aria-hidden="true"></span> Ouvert maintenant, jusqu\'à 2h'
@@ -198,7 +60,413 @@
     }
   }
 
-  // ── Scroll-reveal ───────────────────────────────────────────────────────
+  // ── Gestion du Panier (Cart / Delivery) ────────────────────────────────────
+  var CART_KEY = 'times_cart_items';
+
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCart(cart) {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    } catch (e) {}
+    updateCartUI();
+  }
+
+  function addToCart(productId) {
+    var cart = getCart();
+    var product = (data.products || []).find(function (p) { return p.id === productId; });
+    if (!product) return;
+
+    var existing = cart.find(function (item) { return item.id === productId; });
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        qty: 1
+      });
+    }
+    saveCart(cart);
+
+    // Notification visuelle
+    showToast('Ajouté au panier : ' + product.name);
+  }
+
+  function updateItemQty(productId, delta) {
+    var cart = getCart();
+    var idx = cart.findIndex(function (item) { return item.id === productId; });
+    if (idx > -1) {
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) {
+        cart.splice(idx, 1);
+      }
+      saveCart(cart);
+    }
+  }
+
+  function clearCart() {
+    saveCart([]);
+  }
+
+  function updateCartUI() {
+    var cart = getCart();
+    var count = cart.reduce(function (sum, item) { return sum + item.qty; }, 0);
+    var total = cart.reduce(function (sum, item) { return sum + (item.price * item.qty); }, 0);
+
+    // Badges header
+    document.querySelectorAll('.cart-badge').forEach(function (badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline-block' : 'none';
+    });
+
+    // Panel dans /commander.html
+    var cartListEl = document.getElementById('cart-items-list');
+    var cartTotalEl = document.getElementById('cart-total-amount');
+    var cartEmptyEl = document.getElementById('cart-empty-msg');
+    var orderBtn = document.getElementById('btn-confirm-order');
+
+    if (cartListEl && cartTotalEl) {
+      cartListEl.innerHTML = '';
+      if (cart.length === 0) {
+        if (cartEmptyEl) cartEmptyEl.style.display = 'block';
+        cartTotalEl.textContent = '0 F CFA';
+        if (orderBtn) orderBtn.setAttribute('disabled', 'true');
+      } else {
+        if (cartEmptyEl) cartEmptyEl.style.display = 'none';
+        if (orderBtn) orderBtn.removeAttribute('disabled');
+
+        cart.forEach(function (item) {
+          var row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML = 
+            '<div class="cart-item-info">' +
+              '<div class="cart-item-name">' + item.name + '</div>' +
+              '<div class="cart-item-price">' + formatCFA(item.price) + ' × ' + item.qty + '</div>' +
+            '</div>' +
+            '<div class="cart-item-qty">' +
+              '<button type="button" class="cart-qty-btn btn-minus" data-id="' + item.id + '" aria-label="Diminuer">-</button>' +
+              '<span class="cart-item-count">' + item.qty + '</span>' +
+              '<button type="button" class="cart-qty-btn btn-plus" data-id="' + item.id + '" aria-label="Augmenter">+</button>' +
+            '</div>';
+          cartListEl.appendChild(row);
+        });
+
+        cartTotalEl.textContent = formatCFA(total);
+
+        // Events boutons + / -
+        cartListEl.querySelectorAll('.btn-minus').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            updateItemQty(btn.dataset.id, -1);
+          });
+        });
+        cartListEl.querySelectorAll('.btn-plus').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            updateItemQty(btn.dataset.id, 1);
+          });
+        });
+      }
+    }
+  }
+
+  // ── Toast Notifications ──────────────────────────────────────────────────
+  function showToast(msg) {
+    var toast = document.getElementById('site-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'site-toast';
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#162a4a;color:#fff;border:1px solid #f4b04a;padding:10px 20px;border-radius:999px;font-size:0.9rem;font-weight:600;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.5);opacity:0;transition:opacity 0.3s;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    clearTimeout(window.__toastTimeout);
+    window.__toastTimeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+
+  // ── Recherche Instantanée de plats ───────────────────────────────────────
+  function initSearch() {
+    var searchInput = document.getElementById('menu-search');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', function () {
+      var query = searchInput.value.toLowerCase().trim();
+      var cards = document.querySelectorAll('.product-card, figure[data-n]');
+      var visibleCount = 0;
+
+      cards.forEach(function (card) {
+        var text = (card.textContent || '').toLowerCase();
+        var match = text.indexOf(query) > -1;
+        card.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+      });
+
+      var noResultEl = document.getElementById('search-no-result');
+      if (noResultEl) {
+        noResultEl.style.display = (visibleCount === 0 && query.length > 0) ? 'block' : 'none';
+      }
+    });
+  }
+
+  // ── Validation de Commande (/commander.html) ─────────────────────────────
+  function initOrderForm() {
+    var btn = document.getElementById('btn-confirm-order');
+    if (!btn) return;
+
+    btn.addEventListener('click', function (e) {
+      var cart = getCart();
+      if (cart.length === 0) {
+        alert('Votre panier est vide. Veuillez ajouter des plats.');
+        return;
+      }
+
+      var nameInput = document.getElementById('order-name');
+      var phoneInput = document.getElementById('order-phone');
+      var addressInput = document.getElementById('order-address');
+      var landmarkInput = document.getElementById('order-landmark');
+      var payInput = document.querySelector('input[name="payment_mode"]:checked');
+      var notesInput = document.getElementById('order-notes');
+
+      if (!nameInput || !nameInput.value.trim()) {
+        alert('Veuillez renseigner votre nom.');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+      if (!phoneInput || !phoneInput.value.trim()) {
+        alert('Veuillez renseigner votre numéro de téléphone.');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      if (!addressInput || !addressInput.value.trim()) {
+        alert('Veuillez renseigner votre quartier ou adresse de livraison.');
+        if (addressInput) addressInput.focus();
+        return;
+      }
+
+      var total = cart.reduce(function (sum, item) { return sum + (item.price * item.qty); }, 0);
+      var payMode = payInput ? payInput.value : 'Paiement à la livraison';
+
+      var lines = [
+        '🍽️ *NOUVELLE COMMANDE TIMES CAFÉ BAR & GRILL*',
+        '━━━━━━━━━━━━━━━━━━━━',
+        '👤 *Client :* ' + nameInput.value.trim(),
+        '📞 *Téléphone :* ' + phoneInput.value.trim(),
+        '📍 *Livraison :* ' + addressInput.value.trim(),
+        landmarkInput && landmarkInput.value.trim() ? ('📌 *Repère :* ' + landmarkInput.value.trim()) : '',
+        '💳 *Paiement :* ' + payMode,
+        '',
+        '🛒 *ARTICLES COMMANDÉS :*'
+      ];
+
+      cart.forEach(function (it) {
+        lines.push('• ' + it.qty + 'x ' + it.name + ' (' + formatCFA(it.price * it.qty) + ')');
+      });
+
+      lines.push('');
+      lines.push('💰 *TOTAL : ' + formatCFA(total) + '*');
+      if (notesInput && notesInput.value.trim()) {
+        lines.push('📝 *Remarques :* ' + notesInput.value.trim());
+      }
+      lines.push('━━━━━━━━━━━━━━━━━━━━');
+      lines.push('Merci de me confirmer la prise en charge et le délai de livraison.');
+
+      var message = lines.filter(Boolean).join('\n');
+      window.open(waLink(message), '_blank');
+      clearCart();
+    });
+  }
+
+  // ── Formulaire Réservation (/reservation.html) ───────────────────────────
+  function initReservation() {
+    var btn = document.getElementById('rb') || document.getElementById('btn-submit-res');
+    if (!btn) return;
+
+    var nameInput = document.getElementById('r-name');
+    var phoneInput = document.getElementById('r-phone');
+    var dateInput = document.getElementById('r-date');
+    var timeInput = document.getElementById('r-time');
+    var occasionInput = document.getElementById('r-occasion');
+    var notesInput = document.getElementById('r-notes');
+    var guestPills = document.querySelectorAll('.guest-pill');
+    var selectedGuests = 2;
+
+    // Définir la date min à aujourd'hui
+    if (dateInput) {
+      var today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+      if (!dateInput.value) dateInput.value = today;
+    }
+
+    if (timeInput && !timeInput.value) {
+      timeInput.value = '20:00';
+    }
+
+    guestPills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        guestPills.forEach(function (p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        selectedGuests = parseInt(pill.dataset.value, 10) || 2;
+      });
+    });
+
+    btn.addEventListener('click', function (e) {
+      if (!nameInput || !nameInput.value.trim()) {
+        alert('Veuillez renseigner votre nom.');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+      if (!dateInput || !dateInput.value) {
+        alert('Veuillez sélectionner la date de votre visite.');
+        return;
+      }
+      if (!timeInput || !timeInput.value) {
+        alert("Veuillez sélectionner l'heure.");
+        return;
+      }
+
+      var lines = [
+        '📅 *RÉSERVATION DE TABLE — TIMES CAFÉ BAR & GRILL*',
+        '━━━━━━━━━━━━━━━━━━━━',
+        '👤 *Nom :* ' + nameInput.value.trim(),
+        phoneInput && phoneInput.value.trim() ? ('📞 *Téléphone :* ' + phoneInput.value.trim()) : '',
+        '👥 *Nombre de personnes :* ' + selectedGuests + ' personne(s)',
+        '📆 *Date :* ' + dateInput.value,
+        '⏰ *Heure :* ' + timeInput.value,
+        occasionInput && occasionInput.value ? ('🎉 *Occasion :* ' + occasionInput.value) : '',
+        notesInput && notesInput.value.trim() ? ('📝 *Message :* ' + notesInput.value.trim()) : '',
+        '━━━━━━━━━━━━━━━━━━━━',
+        'Merci de me confirmer la disponibilité d\'une table.'
+      ];
+
+      var message = lines.filter(Boolean).join('\n');
+      window.open(waLink(message), '_blank');
+    });
+  }
+
+  // ── Formulaire Suggestions & Critiques (Privé) ───────────────────────────
+  function initFeedbackForm() {
+    var form = document.getElementById('feedback-form');
+    if (!form) return;
+
+    var selectedType = 'Suggestion';
+    var typeBtns = document.querySelectorAll('.feedback-type-btn');
+    typeBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        typeBtns.forEach(function (btn) { btn.classList.remove('active'); });
+        b.classList.add('active');
+        selectedType = b.dataset.type || b.textContent.trim();
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('fb-name').value.trim();
+      var contact = document.getElementById('fb-contact').value.trim();
+      var msg = document.getElementById('fb-message').value.trim();
+
+      if (!name || !msg) {
+        alert('Veuillez remplir votre nom et votre message.');
+        return;
+      }
+
+      var text = '📬 *RETOUR CLIENT PRIVÉ (' + selectedType + ')*\n' +
+        '• Nom : ' + name + '\n' +
+        (contact ? ('• Contact : ' + contact + '\n') : '') +
+        '• Message : ' + msg;
+
+      window.open(waLink(text), '_blank');
+      alert('Merci pour votre message ! Notre direction y portera toute son attention.');
+      form.reset();
+    });
+  }
+
+  // ── Formulaire Avis Client (/avis.html) ──────────────────────────────────
+  function initReviewsForm() {
+    var form = document.getElementById('review-form');
+    if (!form) return;
+
+    var selectedRating = 5;
+    var stars = document.querySelectorAll('#star-selector span');
+    stars.forEach(function (s) {
+      s.addEventListener('click', function () {
+        selectedRating = parseInt(s.dataset.star, 10) || 5;
+        stars.forEach(function (st, idx) {
+          st.textContent = (idx < selectedRating) ? '★' : '☆';
+        });
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('rev-name').value.trim();
+      var comment = document.getElementById('rev-comment').value.trim();
+      if (!name || !comment) {
+        alert('Veuillez renseigner votre nom et votre avis.');
+        return;
+      }
+
+      var text = '⭐ *NOUVEL AVIS CLIENT (' + selectedRating + '/5)*\n' +
+        '• Auteur : ' + name + '\n' +
+        '• Note : ' + selectedRating + ' / 5 étoiles\n' +
+        '• Avis : ' + comment;
+
+      window.open(waLink(text), '_blank');
+      alert('Merci pour votre avis ! Il sera vérifié et affiché très prochainement.');
+      form.reset();
+    });
+  }
+
+  // ── Navigation Mobile & Scroll ───────────────────────────────────────────
+  function initNavigation() {
+    var hamburger = document.getElementById('hamburger');
+    var navLinks  = document.getElementById('nav-links');
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', function () {
+        var isOpen = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    var navbar = document.querySelector('.navbar');
+    var backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      if (navbar) {
+        if (y > 20) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+      }
+      if (backToTop) {
+        backToTop.classList.toggle('visible', y > 400);
+      }
+    });
+
+    if (backToTop) {
+      backToTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  // ── Scroll Reveal ────────────────────────────────────────────────────────
   function initReveal() {
     var reveals = document.querySelectorAll('.reveal');
     if (!reveals.length) return;
@@ -215,120 +483,40 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
 
     reveals.forEach(function (el) { observer.observe(el); });
   }
 
-  // ── Mobile nav ──────────────────────────────────────────────────────────
-  function initMobileNav() {
-    var hamburger = document.getElementById('hamburger');
-    var navLinks  = document.getElementById('nav-links');
-    if (!hamburger || !navLinks) return;
+  // ── Exposer globalement pour boutons inline ───────────────────────────────
+  window.timesApp = {
+    addToCart: addToCart,
+    clearCart: clearCart,
+    updateItemQty: updateItemQty,
+    getCart: getCart
+  };
 
-    hamburger.addEventListener('click', function () {
-      var isOpen = navLinks.classList.toggle('open');
-      hamburger.classList.toggle('active');
-      hamburger.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-
-    // Close on link click
-    navLinks.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  // ── Scroll Behavior (Navbar blur & Back to top) ──────────────────────────
-  function initScrollBehavior() {
-    var navbar = document.querySelector('.navbar');
-    var backToTop = document.getElementById('back-to-top');
-
-    window.addEventListener('scroll', function () {
-      var y = window.scrollY;
-
-      // Navbar state
-      if (navbar) {
-        if (y > 40) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-      }
-
-      // Back to top visibility
-      if (backToTop) {
-        if (y > 400) {
-          backToTop.classList.add('visible');
-        } else {
-          backToTop.classList.remove('visible');
-        }
-      }
-    }, { passive: true });
-
-    if (backToTop) {
-      backToTop.addEventListener('click', function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-  }
-
-  // ── Lightbox for Images ─────────────────────────────────────────────────
-  function initLightbox() {
-    var lightbox = document.getElementById('lightbox');
-    var lightboxImg = document.getElementById('lightbox-img');
-    var lightboxClose = document.getElementById('lightbox-close');
-
-    if (!lightbox || !lightboxImg) return;
-
-    function openLightbox(src, alt) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt || '';
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Attach click to gallery & menu images
-    document.querySelectorAll('.gal img, .pano, figure img, .section-img, .facade-img').forEach(function (img) {
-      img.addEventListener('click', function () {
-        openLightbox(img.src, img.alt);
-      });
-    });
-
-    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-        closeLightbox();
-      }
-    });
-  }
-
-  // ── Init ────────────────────────────────────────────────────────────────
+  // ── Initialisation globale ────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
-    addOrderButtons();
-    initTabs();
     wireWhatsApp();
-    initReservation();
     updateStatus();
+    updateCartUI();
+    initNavigation();
+    initSearch();
+    initOrderForm();
+    initReservation();
+    initFeedbackForm();
+    initReviewsForm();
     initReveal();
-    initMobileNav();
-    initScrollBehavior();
-    initLightbox();
+
+    // Rendre les boutons "Ajouter" cliquables
+    document.addEventListener('click', function (e) {
+      var target = e.target.closest('[data-add-cart]');
+      if (target) {
+        e.preventDefault();
+        addToCart(target.dataset.addCart);
+      }
+    });
   });
 
 })();
