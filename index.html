@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <!-- SEO -->
+    <title>Times Café Bar & Grill – Akpakpa, Cotonou</title>
+    <meta name="description"
+        content="Times Café Bar & Grill à Akpakpa, Cotonou : cuisine, grillades, pizzas, terrasse, karaoké et bonne ambiance. Ouvert tous les jours de 9h30 à 2h.">
+    <meta name="theme-color" content="#0b1626">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='16' width='100' height='100' fill='%230b1626'/><text x='50' y='68' text-anchor='middle' font-size='48' font-weight='bold' fill='%235cc8ff'>T</text></svg>">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Times Café Bar & Grill – Akpakpa, Cotonou">
+    <meta property="og:description"
+        content="Cuisine, grillades, pizzas, terrasse et karaoké à Akpakpa. Ouvert tous les jours de 9h30 à 2h.">
+    <meta property="og:image" content="img/hero.jpg">
+    <meta property="og:type" content="restaurant">
+    <meta property="og:locale" content="fr_BJ">
+
+    <!-- Schema.org Restaurant -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Times Café Bar & Grill",
+    "image": "img/hero.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Lot n° 36, Akpakpa PK6",
+      "addressLocality": "Cotonou",
+      "addressCountry": "BJ"
+    },
+    "telephone": "+2290169698686",
+    "openingHours": "Mo-Su 09:30-02:00",
+    "servesCuisine": ["Africaine", "Européenne", "Pizza", "Grillades"],
+    "priceRange": "$$",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.3",
+      "reviewCount": "44"
+    }
+  }
+  </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;600;700&display=swap">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- ═══════════ Blocage Anti-Netlify Drawer / AI Chat ═══════════ -->
+    <style>
+        netlify-drawer,
+        #netlify-drawer,
+        [data-netlify-drawer],
+        [class*="netlify-drawer"],
+        [id*="netlify-drawer"],
+        [data-netlify-badge],
+        iframe[src*="netlify"],
+        iframe[title*="Netlify"],
+        iframe[id*="netlify"],
+        div:has(> iframe[src*="netlify"]),
+        div:has(> iframe[title*="Netlify"]),
+        div[class*="netlify"],
+        div[id*="netlify"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            height: 0 !important;
+            width: 0 !important;
+            position: absolute !important;
+            z-index: -9999 !important;
+        }
+    </style>
+    <script>
+        (function () {
+            function purgeNetlify() {
+                var targets = [
+                    'netlify-drawer',
+                    '#netlify-drawer',
+                    '[data-netlify-drawer]',
+                    '[class*="netlify-drawer"]',
+                    '[id*="netlify-drawer"]',
+                    '[data-netlify-badge]',
+                    'iframe[src*="netlify"]',
+                    'iframe[title*="Netlify"]',
+                    'iframe[id*="netlify"]'
+                ];
+                targets.forEach(function (sel) {
+                    document.querySelectorAll(sel).forEach(function (node) {
+                        var container = node.closest('div');
+                        if (container && container !== document.body && container.querySelector('iframe[src*="netlify"], [class*="netlify-drawer"]')) {
+                            container.remove();
+                        } else if (node.parentNode) {
+                            node.remove();
+                        }
+                    });
+                });
+            }
+            if (window.MutationObserver) {
+                var observer = new MutationObserver(function () {
+                    purgeNetlify();
+                });
+                observer.observe(document.documentElement, { childList: true, subtree: true });
+            }
+            window.addEventListener('DOMContentLoaded', purgeNetlify);
+            window.addEventListener('load', purgeNetlify);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- ═══════════ Navigation ═══════════ -->
+    <nav class="navbar" role="navigation" aria-label="Navigation principale">
+        <a class="logo" href="#top">TIMES</a>
+
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false"
+            aria-controls="nav-links">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-links" id="nav-links">
+            <a href="#carte">La carte</a>
+            <a href="#boissons">Boissons</a>
+            <a href="#ambiance">Ambiance</a>
+            <a href="#reserver">Réserver</a>
+            <a class="btn" href="#venir">Venir</a>
+        </div>
+    </nav>
+
+    <!-- ═══════════ Hero (Design façon El Fuego : Vif, Net & Élégant) ═══════════ -->
+    <header class="hero" id="top">
+        <div class="hero-bg-wrapper">
+            <img src="img/hero.jpg" alt="Façade et ambiance lumineuse de Times Café Bar & Grill à Cotonou" class="hero-bg-img"
+                fetchpriority="high">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="wrap hero-wrap">
+            <div class="hero-content">
+                <div class="pill" id="status-pill">
+                    <span class="dot on" id="dot" aria-hidden="true"></span>
+                    <span id="open">Ouvert maintenant · jusqu'à 2h</span>
+                    <span class="pill-sep" aria-hidden="true">|</span>
+                    <span class="pill-rating">★ 4,3 sur Google</span>
+                </div>
+                <h1>Les moments, ça se partage ici.</h1>
+                <p class="hero-desc">Restaurant, pizzeria, bar à cocktails & grillades au cœur d'Akpakpa, Cotonou. Une cuisine généreuse, une terrasse sous les guirlandes et des soirées inoubliables entre amis.</p>
+                <div class="row hero-btns">
+                    <a class="btn" href="#carte">Voir la carte</a>
+                    <a class="btn btn-secondary" href="#reserver">📅 Réserver une table</a>
+                    <a class="btn btn-phone" href="tel:+2290169698686">📞 Nous appeler</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════ Bandeau Informations Rapides (comme El Fuego) ═══════════ -->
+    <div class="strip">
+        <div class="wrap strip-wrap">
+            <div class="strip-item">
+                <span class="strip-icon" aria-hidden="true">🕒</span>
+                <div>
+                    <b>Horaires d'ouverture</b>
+                    <span>Tous les jours : 9h30 – 2h00</span>
+                </div>
+            </div>
+            <div class="strip-item">
+                <span class="strip-icon" aria-hidden="true">📍</span>
+                <div>
+                    <b>Adresse</b>
+                    <span>Lot n° 36, Akpakpa PK6, Cotonou</span>
+                </div>
+            </div>
+            <div class="strip-item">
+                <span class="strip-icon" aria-hidden="true">📞</span>
+                <div>
+                    <b>Téléphone & Commandes</b>
+                    <a href="tel:+2290169698686">+229 01 69 69 86 86</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ Intro ═══════════ -->
+    <section>
+        <div class="wrap two-col">
+            <div class="reveal">
+                <h2>Une terrasse pour prendre son temps</h2>
+                <p class="muted">Depuis 2017, Times réunit bar, restaurant, pizzeria et grillades, avec des spécialités
+                    européennes et africaines, de la bière pression, de la shisha et des soirées karaoké.</p>
+                <p class="muted" style="margin-top: 1rem;">Un déjeuner en famille, un verre après le travail ou une
+                    soirée entre amis : il y a toujours une table pour vous.</p>
+            </div>
+            <img class="section-img reveal" src="img/terrasse-jour.jpg"
+                alt="La terrasse en bois de Times en journée, tables dressées sous les guirlandes" loading="lazy">
+        </div>
+    </section>
+
+    <!-- ═══════════ La carte ═══════════ -->
+    <section class="section--dark" id="carte">
+        <div class="wrap">
+            <h2 class="reveal">La carte</h2>
+            <p class="lead reveal">Choisissez un plat et envoyez votre commande sur WhatsApp. Les prix et les plats du
+                jour vous sont confirmés par l'équipe.</p>
+
+            <div class="tabs" id="tabs" role="tablist" aria-label="Filtrer les plats par catégorie"></div>
+
+            <!-- Poissons et fruits de mer -->
+            <div class="cat reveal">
+                <h3>Poissons et fruits de mer</h3>
+                <div class="grid">
+                    <figure data-c="p" data-n="Poisson frit, riz et alloco">
+                        <img src="img/menu/poisson-frit-riz-alloco.jpg" alt="Poisson frit, riz et alloco"
+                            loading="lazy">
+                        <figcaption><b>Poisson frit, riz et alloco</b><span>Sauce d'oignons et poivrons, piment à
+                                part.</span></figcaption>
+                    </figure>
+                    <figure data-c="p" data-n="Poisson braisé, riz blanc">
+                        <img src="img/menu/poisson-braise-riz.jpg" alt="Poisson braisé, riz blanc" loading="lazy">
+                        <figcaption><b>Poisson braisé, riz blanc</b><span>Servi avec ses sauces.</span></figcaption>
+                    </figure>
+                    <figure data-c="p" data-n="Gambas et légumes">
+                        <img src="img/menu/gambas-legumes.jpg" alt="Gambas et légumes" loading="lazy">
+                        <figcaption><b>Gambas et légumes</b><span>Gambas épicées, légumes rôtis.</span></figcaption>
+                    </figure>
+                    <figure data-c="p" data-n="Filets de poisson au curry">
+                        <img src="img/menu/filets-poisson-curry.jpg" alt="Filets de poisson au curry" loading="lazy">
+                        <figcaption><b>Filets de poisson au curry</b><span>Sauce crémeuse, riz basmati.</span>
+                        </figcaption>
+                    </figure>
+                    <figure data-c="p" data-n="Poisson frit, riz et légumes">
+                        <img src="img/menu/poisson-frit-riz-legumes.jpg" alt="Poisson frit, riz et légumes"
+                            loading="lazy">
+                        <figcaption><b>Poisson frit, riz et légumes</b><span>Servi avec sa sauce pimentée.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Plats du pays -->
+            <div class="cat reveal">
+                <h3>Plats du pays</h3>
+                <div class="grid">
+                    <figure data-c="d" data-n="Pâte et sauce verte">
+                        <img src="img/menu/pate-sauce-verte.jpg" alt="Pâte et sauce verte" loading="lazy">
+                        <figcaption><b>Pâte et sauce verte</b><span>Crevettes et poisson dans une sauce verte
+                                relevée.</span></figcaption>
+                    </figure>
+                    <figure data-c="d" data-n="Pâte et sauce gombo">
+                        <img src="img/menu/pate-sauce-gombo.jpg" alt="Pâte et sauce gombo" loading="lazy">
+                        <figcaption><b>Pâte et sauce gombo</b><span>Gombo, fruits de mer et viande.</span></figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Grillades et viandes -->
+            <div class="cat reveal">
+                <h3>Grillades et viandes</h3>
+                <div class="grid">
+                    <figure data-c="g" data-n="Brochettes de poulet au bacon">
+                        <img src="img/menu/brochettes-poulet-bacon.jpg" alt="Brochettes de poulet au bacon"
+                            loading="lazy">
+                        <figcaption><b>Brochettes de poulet au bacon</b><span>Poulet grillé, herbes fraîches.</span>
+                        </figcaption>
+                    </figure>
+                    <figure data-c="g" data-n="Grillade, riz et légumes">
+                        <img src="img/menu/grillade-riz-legumes.jpg" alt="Grillade, riz et légumes" loading="lazy">
+                        <figcaption><b>Grillade, riz et légumes</b><span>Servie avec tomate rôtie et piment.</span>
+                        </figcaption>
+                    </figure>
+                    <figure data-c="g" data-n="Bœuf sauté aux oignons">
+                        <img src="img/menu/boeuf-saute-oignons.jpg" alt="Bœuf sauté aux oignons" loading="lazy">
+                        <figcaption><b>Bœuf sauté aux oignons</b><span>Bœuf tendre et oignons caramélisés.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Pizzas -->
+            <div class="cat reveal">
+                <h3>Pizzas</h3>
+                <div class="grid">
+                    <figure data-c="z" data-n="Pizza jambon, champignons et olives">
+                        <img src="img/menu/pizza-jambon-champignons.jpg" alt="Pizza jambon, champignons et olives"
+                            loading="lazy">
+                        <figcaption><b>Pizza jambon, champignons et olives</b><span>Fromage fondant, poivron
+                                vert.</span></figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Pâtes et riz -->
+            <div class="cat reveal">
+                <h3>Pâtes et riz</h3>
+                <div class="grid">
+                    <figure data-c="r" data-n="Tagliatelles au poulet">
+                        <img src="img/menu/tagliatelles-poulet.jpg" alt="Tagliatelles au poulet" loading="lazy">
+                        <figcaption><b>Tagliatelles au poulet</b><span>Sauce crémeuse aux champignons.</span>
+                        </figcaption>
+                    </figure>
+                    <figure data-c="r" data-n="Riz cantonais">
+                        <img src="img/menu/riz-cantonais.jpg" alt="Riz cantonais" loading="lazy">
+                        <figcaption><b>Riz cantonais</b><span>Jambon, œuf et petits pois.</span></figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Desserts -->
+            <div class="cat reveal">
+                <h3>Desserts</h3>
+                <div class="grid">
+                    <figure data-c="s" data-n="Glace">
+                        <img src="img/menu/glace.jpg" alt="Coupe de glace artisanale" loading="lazy">
+                        <figcaption><b>Glace</b><span>Pour finir la soirée.</span></figcaption>
+                    </figure>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════ Boissons ═══════════ -->
+    <section id="boissons">
+        <div class="wrap">
+            <h2 class="reveal">Boissons</h2>
+
+            <div class="drinks-grid reveal">
+                <div>
+                    <h3>Bières</h3>
+                    <p class="drink-item"><span>Flag, Castel, Béninoise</span><span>1 200 F</span></p>
+                    <p class="drink-item"><span>Heineken, Beaufort, Guinness</span><span>1 500 F</span></p>
+                    <p class="drink-item"><span>Desperados, Savanna</span><span>2 500 F</span></p>
+                </div>
+                <div>
+                    <h3>Sans alcool</h3>
+                    <p class="drink-item"><span>Eau minérale (petite)</span><span>1 000 F</span></p>
+                    <p class="drink-item"><span>Jus en bouteille</span><span>1 500 F</span></p>
+                    <p class="drink-item"><span>Malta Guinness, Perrier</span><span>1 500 F</span></p>
+                    <p class="drink-item"><span>Jus naturel, orange ou ananas</span><span>2 000 F</span></p>
+                </div>
+                <div>
+                    <h3>Boissons chaudes</h3>
+                    <p class="drink-item"><span>Thé, infusion, chocolat chaud</span><span>1 500 F</span></p>
+                    <p class="drink-item"><span>Café allongé ou Nescafé</span><span>1 500 F</span></p>
+                    <p class="drink-item"><span>Thé au lait, cappuccino</span><span>2 000 F</span></p>
+                </div>
+                <div>
+                    <h3>Apéritifs</h3>
+                    <p class="drink-item"><span>Rhum Bacardi, Gin Gordon's</span><span>3 000 F</span></p>
+                    <p class="drink-item"><span>Vodka Absolut, Téquila</span><span>3 000 F</span></p>
+                </div>
+            </div>
+
+            <p class="muted reveal" style="margin-top: 1.5rem">Prix en francs CFA.</p>
+        </div>
+    </section>
+
+    <!-- ═══════════ Ambiance ═══════════ -->
+    <section class="section--dark" id="ambiance">
+        <div class="wrap">
+            <h2 class="reveal">Le soir, Times s'allume</h2>
+
+            <img class="pano reveal" src="img/ambiance/panorama-nuit.jpg"
+                alt="Vue panoramique de la terrasse de Times de nuit, éclairée par des guirlandes" loading="lazy">
+
+            <div class="gal reveal">
+                <img class="a" src="img/ambiance/terrasse-nuit.jpg"
+                    alt="La terrasse de Times de nuit, tables occupées et ambiance chaleureuse" loading="lazy">
+                <img src="img/ambiance/facade-nuit.jpg" alt="La façade de Times éclairée de nuit" loading="lazy">
+                <img src="img/ambiance/biere-terrasse.jpg" alt="Une tour de bière et deux chopes sur la terrasse"
+                    loading="lazy">
+            </div>
+
+            <p class="muted reveal" style="margin: 2rem 0 1rem; max-width: 56ch;">Soirées karaoké, bière pression et
+                bonne musique : venez chanter entre amis.</p>
+            <a class="btn reveal" data-wa="Bonjour Times, quand a lieu la prochaine soirée karaoké ?" href="#">Demander
+                la prochaine soirée karaoké</a>
+        </div>
+    </section>
+
+    <!-- ═══════════ Avis ═══════════ -->
+    <section>
+        <div class="wrap">
+            <h2 class="reveal">Ils en parlent</h2>
+            <p class="score reveal">★ 4,3 sur 5 — 44 avis Google</p>
+
+            <div class="reviews reveal">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>
+                        Bon coin chic, très propre et très accueillant.
+                        <cite>— Cedric D., avis Google</cite>
+                    </blockquote>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★☆</div>
+                    <blockquote>
+                        Un coin sympa avec de la bonne cuisine.
+                        <cite>— Cowiya A., avis Google</cite>
+                    </blockquote>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★☆</div>
+                    <blockquote>
+                        On y mange des plats européens et béninois à un prix correct. Le service est bon.
+                        <cite>— Imaa B., avis Google</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ Événements ═══════════ -->
+    <section class="section--dark">
+        <div class="wrap two-col">
+            <div class="reveal">
+                <h2>Anniversaires, repas de groupe, soirées</h2>
+                <p class="muted">Vous préparez un événement ? Écrivez-nous la date et le nombre de personnes : nous vous
+                    répondons sur WhatsApp avec une proposition.</p>
+                <a class="btn"
+                    data-wa="Bonjour Times, je voudrais un devis pour un événement (date, nombre de personnes) :"
+                    href="#" style="margin-top: 1.2rem;">Demander un devis</a>
+            </div>
+            <img class="section-img reveal" src="img/evenement-terrasse.jpg"
+                alt="La terrasse de Times décorée pour un événement" loading="lazy" style="aspect-ratio: 16/10;">
+        </div>
+    </section>
+
+    <!-- ═══════════ Réservation ═══════════ -->
+    <section id="reserver">
+        <div class="wrap form-wrap">
+            <h2 class="reveal">Réserver une table</h2>
+            <p class="muted reveal">Remplissez ces champs : votre message s'ouvre dans WhatsApp, prêt à envoyer.</p>
+
+            <div class="fields reveal">
+                <input id="r-name" placeholder="Votre nom" aria-label="Votre nom" class="full" autocomplete="name">
+                <input id="r-date" type="date" aria-label="Date de réservation">
+                <input id="r-time" type="time" aria-label="Heure de réservation">
+                <input id="r-guests" type="number" min="1" max="50" placeholder="Nombre de personnes"
+                    aria-label="Nombre de personnes" class="full">
+            </div>
+
+            <p class="form-error" id="form-error" role="alert" aria-live="polite"></p>
+            <a class="btn" id="rb" href="#" aria-label="Envoyer la réservation sur WhatsApp">Envoyer sur WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- ═══════════ Venir ═══════════ -->
+    <section class="section--dark visit" id="venir">
+        <div class="wrap">
+            <img class="facade-img reveal" src="img/facade-jour.jpg"
+                alt="La façade de Times Café Bar & Grill en journée" loading="lazy">
+
+            <h2 class="reveal">Venir chez Times</h2>
+
+            <ul class="services reveal">
+                <li>Sur place</li>
+                <li>À emporter</li>
+                <li>Livraison</li>
+                <li>Terrasse</li>
+                <li>Karaoké</li>
+            </ul>
+
+            <address class="reveal">Lot n° 36, Akpakpa PK6<br>Cotonou, Bénin</address>
+            <p class="muted reveal">Tous les jours, de 9h30 à 2h</p>
+            <p class="muted reveal">WhatsApp et téléphone : <a href="tel:+2290169698686">01 69 69 86 86</a></p>
+
+            <div class="map-container reveal">
+                <iframe title="Localisation de Times Café Bar & Grill à Cotonou"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15865.123456789!2d2.4567!3d6.3689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1023554b73b22cfd%3A0x6b772c918349254!2sAkpakpa%2C%20Cotonou%2C%20B%C3%A9nin!5e0!3m2!1sfr!2sbj!4v1700000000000!5m2!1sfr!2sbj"
+                    loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <div class="row reveal" style="margin-top: 1.8rem;">
+                <a class="btn" href="https://maps.app.goo.gl/ukoEQ7XUMRnVW49Y6" target="_blank"
+                    rel="noopener">Itinéraire sur Google Maps</a>
+                <a class="btn alt" href="tel:+2290169698686">Appeler le 01 69 69 86 86</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ Footer ═══════════ -->
+    <footer>
+        <p>© 2017–2026 Times Café Bar & Grill, Cotonou · <a href="tel:+2290169698686">01 69 69 86 86</a></p>
+    </footer>
+
+    <!-- ═══════════ Back to top ═══════════ -->
+    <button class="back-to-top" id="back-to-top" aria-label="Remonter en haut de la page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <!-- ═══════════ WhatsApp FAB ═══════════ -->
+    <a class="wa-fab" data-wa="Bonjour Times, " href="#" aria-label="Nous contacter sur WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            <path
+                d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.106-1.138l-.294-.176-2.6.774.774-2.6-.176-.294A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" />
+        </svg>
+        WhatsApp
+    </a>
+
+    <!-- ═══════════ Lightbox Modal ═══════════ -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualiseur d'image">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Fermer l'agrandissement">&times;</button>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
